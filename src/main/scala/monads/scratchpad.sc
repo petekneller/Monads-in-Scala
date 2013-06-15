@@ -1,1 +1,0 @@
-monads.LoggerMonad.testLoggingMonad.runLogger(List.empty)
