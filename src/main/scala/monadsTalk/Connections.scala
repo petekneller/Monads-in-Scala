@@ -2,8 +2,8 @@ package monadsTalk
 
 import anorm._
 import java.sql.Connection
-import monadTransformers.Environment
-import monadTransformers.ScalaMonad.typeclass2ScalaMonad
+import impls.ScalaMonad.typeclass2ScalaMonad
+import impls.Connections._
 
 object Connections {
 
@@ -14,6 +14,7 @@ object Connections {
 
 
 
+  // the solution
   def getMeEverything2(implicit conn: Connection) = SQL("select * from everything").apply()
 
 
@@ -30,7 +31,7 @@ object Connections {
 
     // does some more stuff
 
-    return 2
+    return 2 // rows.size
   }
 
 
@@ -40,9 +41,11 @@ object Connections {
 
 
 
-  val env = new Environment[Connection]
-  import env._
+  /*
+        What does this look like using the Environment (also known as the Reader) monad
+   */
 
+  import env._
   def mySQL(stmt: String): env.Env[Stream[SqlRow]] = asks{ implicit c: Connection => SQL(stmt).apply() }
 
 
@@ -61,7 +64,6 @@ object Connections {
     // does some stuff...
 
       rows <- getMeEverything3
-//      rows2 <- ordersFor(LocalDate.now)
 
     // does some more stuff
     } yield rows.size
