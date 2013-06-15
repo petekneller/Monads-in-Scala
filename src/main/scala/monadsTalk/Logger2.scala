@@ -1,36 +1,20 @@
 package monadsTalk
 
-import monadTransformers.{Monad, ScalaMonad}
+import impls.{Monad, ScalaMonad}
 import ScalaMonad.typeclass2ScalaMonad
+import impls.Logger2._
 
 object Logger2 {
 
-  implicit def writerMonad = new Monad[Logger] {
-    def returnM[A](a: A): Logger[A] = { currentOutput: Seq[String] =>
-      (a, currentOutput)
-    }
-    def bindM[A, B](m: Logger[A], f: A => Logger[B]): Logger[B] = { (currentOutput: Seq[String]) =>
-      val (a, outputAfterM1) = m(currentOutput)
-      val m2 = f(a)
-      m2(outputAfterM1)
-    }
-  }
-
-
-
-
-
-
-
-
-
   // a better way?
   type Logger[A] = Seq[String] => (A, Seq[String])
-  object Logger {
-    def log(output: String): Logger[Unit] =                                     { (orig: Seq[String]) => ((), orig :+ output) }
-    def result[A](res: A): Logger[A] =                                          { (orig: Seq[String]) => (res, orig) }
-    def logWithResult[A](output: String, res: A): Logger[A] =                   { (orig: Seq[String]) => (res, orig :+ output) }
+
+  trait LoggingApi {
+    def log(output: String): Logger[Unit]
+    def result[A](res: A): Logger[A]
+    def logWithResult[A](output: String, res: A): Logger[A]
   }
+  import impls.Logger2.Logger
 
 
 

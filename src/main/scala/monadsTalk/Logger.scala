@@ -2,6 +2,13 @@ package monadsTalk
 
 object Logger {
 
+  /*
+      Logging without mutation?
+   */
+
+
+
+  // perhaps like this?
   trait Logger {
     def log(output: String): Logger
     def log(output: Seq[String]): Logger
@@ -31,7 +38,7 @@ object Logger {
     return (aResult, newLogger)
   }
 
-
+  // this gets ugly fast
   def iDontCareAboutLoggers(aParam: Int, originalLogger: Logger): (Int, Logger) = {
     // some stuff...
     val newLogger = foo("some guy", originalLogger)
