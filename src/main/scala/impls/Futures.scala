@@ -10,7 +10,7 @@ object Futures {
   case class MyFuture[A](fut: Future[A]) {
     def getResult: A = Await.result(fut, Duration.Inf)
   }
-  
+
   implicit def future2MyFuture[A](fut: Future[A]): MyFuture[A] = MyFuture(fut)
 
 }

@@ -1,7 +1,5 @@
 package talk
 
-import collection.immutable
-
 object Lists {
 
   // the obvious way, but why?
