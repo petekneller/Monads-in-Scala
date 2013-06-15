@@ -7,8 +7,10 @@ import monadTransformers.ScalaMonad.typeclass2ScalaMonad
 
 object Connections {
 
+  /*
+        Won't compile without an implicit connection
+   */
 //  def getMeEverything = SQL("select * from everything").apply()
-
 
 
 
@@ -21,11 +23,14 @@ object Connections {
   def doesSomeStuffAndAsksForEverything(arg1: Int, arg2: Boolean): Int = {
     // does some stuff...
 
-    val rows = getMeEverything2
+    /*
+        Also won't compile without an explicit connection. And this tends to infect the whole call stack above this fn
+     */
+//    val rows = getMeEverything2
 
     // does some more stuff
 
-    return rows.size
+    return 2
   }
 
 
@@ -63,7 +68,7 @@ object Connections {
   }
 
   val conn: Connection = null
-  val theNumberOfRows = doesSomeStuffAndAsksForEverything2(1,2)(conn)
+  val theNumberOfRows = doesSomeStuffAndAsksForEverything2(1,true)(conn)
 
 
 

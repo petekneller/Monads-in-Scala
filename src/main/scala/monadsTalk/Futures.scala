@@ -1,18 +1,9 @@
 package talk
 
-import scala.concurrent.{Future, Await}
-import scala.concurrent.duration.Duration
-import concurrent.ExecutionContext
+import scala.concurrent.Future
 
 object Futures {
-  import ExecutionContext.Implicits.global
-  case class MyFuture[A](fut: Future[A]) {
-    def getResult: A = Await.result(fut, Duration.Inf)
-  }
-  implicit def future2MyFuture[A](fut: Future[A]): MyFuture[A] = MyFuture(fut)
-
-
-
+  import impls.Futures._
 
 
   case class Employee(name: String)
