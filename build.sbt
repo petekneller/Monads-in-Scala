@@ -1,4 +1,4 @@
-organization := "pk"
+organization := "org.github.petekneller"
 
 name := "Monads-in-Scala"
 
